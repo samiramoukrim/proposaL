@@ -1,0 +1,78 @@
+/* بطاقة الفورم */
+.contact-card {
+  background: rgba(255, 255, 255, 0.1); /* شفافة مع لمسة أبيض */
+  backdrop-filter: blur(10px); /* تأثير الضبابية */
+  border-radius: 20px;
+  padding: 40px 30px;
+  max-width: 500px;
+  margin: 50px auto;
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+/* Inputs و textarea */
+.contact-card input,
+.contact-card textarea {
+  background: rgba(255, 255, 255, 0.15); /* شبه شفافة */
+  border: none;
+  border-radius: 15px;
+  padding: 15px 20px;
+  color: #fff;
+  font-size: 16px;
+  width: 100%;
+  box-sizing: border-box;
+  resize: none;
+}
+
+.contact-card input::placeholder,
+.contact-card textarea::placeholder {
+  color: rgba(255, 255, 255, 0.7);
+}
+
+/* زر الإرسال */
+.contact-card button {
+  background: linear-gradient(135deg, #ff7e5f, #feb47b);
+  border: none;
+  border-radius: 15px;
+  padding: 15px 0;
+  color: #fff;
+  font-size: 18px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.contact-card button:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* أيقونات الأسفل */
+.contact-card .icons {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  margin-top: 10px;
+}
+
+.contact-card .icons svg {
+  width: 28px;
+  height: 28px;
+  color: #fff;
+  transition: 0.3s;
+}
+
+.contact-card .icons svg:hover {
+  color: #ff7e5f;
+  transform: scale(1.2);
+}
+
+/* responsive */
+@media (max-width: 600px) {
+  .contact-card {
+    padding: 30px 20px;
+  }
+}

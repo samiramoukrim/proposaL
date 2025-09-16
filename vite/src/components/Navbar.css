@@ -1,0 +1,81 @@
+.navbar {
+  background: linear-gradient(90deg, #ffdde1, #ee9ca7); /* وردي متدرج */
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px 40px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.logo img {
+  height: 50px;
+  width: auto;
+}
+
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li a {
+  color: white;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1.1rem;
+  position: relative;
+  padding: 5px 0;
+  transition: color 0.3s ease, transform 0.2s ease;
+}
+
+/* خط متحرك تحت اللينك */
+nav ul li a::after {
+  content: "";
+  position: absolute;
+  left: 50%;
+  bottom: -5px;
+  width: 0%;
+  height: 2px;
+  background: white;
+  transition: all 0.3s ease;
+  transform: translateX(-50%);
+}
+
+nav ul li a:hover {
+  color: #fff5f7; /* لون أخف */
+  transform: scale(1.05);
+}
+
+nav ul li a:hover::after {
+  width: 100%;
+}
+
+/* Active page highlight */
+.active-link {
+  color: #fff;
+  font-weight: 700;
+}
+
+.active-link::after {
+  width: 100%;
+  background: white;
+}
+
+/* Booking special link (optional) */
+.booking-link {
+  padding: 6px 14px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.15);
+  transition: background 0.2s ease;
+}
+
+.booking-link:hover {
+  background: rgba(255,255,255,0.3);
+}
+

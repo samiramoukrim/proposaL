@@ -1,0 +1,109 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap');
+
+.info__section {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 50px;
+  max-width: 1200px;
+  margin: 40px auto;
+  padding: 60px 40px;
+  font-family: 'Poppins', sans-serif;
+
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+.info__text {
+  flex: 1.2;
+  text-align: left;
+}
+
+/* العنوان الكبير */
+.info__text h1 {
+  font-size: 3rem;
+  margin-bottom: 30px;
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(90deg, #ff6f61, #d63384);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+/* العناوين الصغار باللون الذهبي */
+.info__block {
+  margin-bottom: 25px;
+  text-align: left;
+}
+
+.info__block h2 {
+  font-size: 1.8rem;
+  margin-bottom: 12px;
+  font-weight: 700;
+  font-family: 'Playfair Display', serif;
+  background: linear-gradient(90deg, #ff9a9e, #fbc2eb);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  position: relative;
+}
+
+.info__block h2::after {
+  content: "";
+  display: block;
+  width: 50px;
+  height: 3px;
+  background: #ff9a9e;
+  margin-top: 6px;
+  border-radius: 2px;
+}
+
+/* النصوص */
+.info__block p {
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #666;
+  font-family: 'Poppins', sans-serif;
+  margin-left: 5px;
+}
+
+/* الصورة */
+.info__image {
+  flex: 1;
+  text-align: right;
+}
+
+.info__image img {
+  max-width: 100%;
+  border-radius: 16px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  transition: transform 0.3s ease;
+}
+
+.info__image img:hover {
+  transform: scale(1.05);
+}
+
+/* Responsive */
+@media (max-width: 992px) {
+  .info__section {
+    flex-direction: column;
+    text-align: left;
+    gap: 30px;
+    padding: 40px 20px;
+  }
+
+  .info__text h1 {
+    font-size: 2.2rem;
+  }
+
+  .info__block h2 {
+    font-size: 1.4rem;
+  }
+
+  .info__image {
+    text-align: center;
+  }
+}
+

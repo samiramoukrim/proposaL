@@ -1,0 +1,157 @@
+:root {
+  --accent-1: #ff5fa2;
+  --accent-2: #ff758c;
+  --text-light: #ffffff;
+  --card-radius: 18px;
+}
+
+/* Page & overlay */
+.blog-page {
+  min-height: 100vh;
+  font-family: "Poppins", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background-image: url("https://i.pinimg.com/736x/bd/a1/a6/bda1a623be784c880e411efe8846b14e.jpg");
+  background-size: cover;
+  background-position: center;
+  padding: 40px 20px;
+  color: var(--text-light);
+  position: relative;
+}
+
+.blog-page::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.38);
+  z-index: 0;
+}
+
+/* Hero */
+.blog-hero {
+  text-align: center;
+  position: relative;
+  z-index: 1;
+  margin-bottom: 32px;
+}
+
+.blog-hero h1 { font-size: 2rem; margin-bottom: 10px; animation: fadeInDown 0.6s ease; }
+.blog-hero p { font-size: 1rem; color: rgba(255,255,255,0.85); animation: fadeInDown 0.8s ease; }
+
+/* Controls */
+.blog-controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-bottom: 24px;
+  position: relative;
+  z-index: 1;
+  animation: fadeIn 0.8s ease;
+}
+
+.blog-controls input[type="text"],
+.blog-controls select {
+  padding: 10px 14px;
+  border-radius: 12px;
+  border: none;
+  outline: none;
+  font-size: 0.95rem;
+  min-width: 180px;
+}
+
+.blog-controls input { flex:1; max-width: 300px; }
+.blog-controls select { flex:1; max-width: 180px; }
+
+/* Blog cards */
+.blog-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+  position: relative;
+  z-index: 1;
+}
+
+.blog-card {
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  border-radius: var(--card-radius);
+  overflow: hidden;
+  box-shadow: 0 18px 50px rgba(2,6,23,0.5);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, opacity 0.4s ease;
+  display: flex;
+  flex-direction: column;
+  opacity: 0;
+  animation: fadeInUp 0.6s forwards;
+}
+
+.blog-card img { width: 100%; height: 180px; object-fit: cover; }
+.blog-content { padding: 16px; flex:1; display: flex; flex-direction: column; justify-content: space-between; }
+.blog-content h2 { font-size: 1.2rem; margin-bottom: 8px; }
+.blog-content p { font-size: 0.95rem; margin-bottom: 12px; color: rgba(255,255,255,0.85); }
+
+.read-more { font-weight: 600; color: var(--accent-1); text-decoration: none; transition: color 0.2s ease; }
+.read-more:hover { color: var(--accent-2); }
+.blog-card:hover { transform: translateY(-6px); box-shadow: 0 22px 60px rgba(255,95,162,0.22); }
+
+/* Blog detail */
+.blog-detail {
+  max-width: 780px;
+  margin: 50px auto;
+  background: rgba(255,255,255,0.08);
+  backdrop-filter: blur(14px) saturate(120%);
+  -webkit-backdrop-filter: blur(14px) saturate(120%);
+  border-radius: 18px;
+  padding: 28px;
+  box-shadow: 0 18px 50px rgba(2,6,23,0.6);
+  color: var(--text-light);
+  text-align: left;
+  position: relative;
+  z-index: 1;
+  opacity: 0;
+  animation: fadeIn 0.8s forwards;
+}
+
+.blog-detail img { width: 100%; height: 300px; object-fit: cover; border-radius: 12px; margin-bottom: 20px; }
+.blog-detail h1 { font-size: 1.8rem; margin-bottom: 14px; }
+.blog-content-text { font-size: 1rem; line-height: 1.6; margin-bottom: 10px; color: rgba(255,255,255,0.9); }
+
+/* Pagination */
+.blog-pagination {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-top: 28px;
+  position: relative;
+  z-index: 1;
+}
+
+.blog-pagination button {
+  padding: 8px 14px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  background: rgba(255,255,255,0.1);
+  color: var(--text-light);
+  transition: all 0.2s ease;
+}
+
+.blog-pagination button:hover { background: var(--accent-1); color: #fff; }
+.blog-pagination button.active { background: var(--accent-2); color: #fff; }
+
+.no-posts { text-align: center; font-size: 1rem; color: rgba(255,255,255,0.85); width: 100%; grid-column: 1/-1; }
+
+/* Animations */
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+@keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+@keyframes fadeInDown { from { opacity: 0; transform: translateY(-20px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Responsive */
+@media (max-width: 480px) {
+  .blog-hero h1 { font-size: 1.6rem; }
+  .blog-hero p { font-size: 0.9rem; }
+  .blog-card img { height: 150px; }
+  .blog-detail img { height: 200px; }
+  .blog-detail { padding: 20px; margin: 30px 10px; }
+  .blog-controls { flex-direction: column; gap: 10px; }
+}

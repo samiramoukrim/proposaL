@@ -1,0 +1,153 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Poppins:wght@400;500;600&display=swap');
+
+/* Wrapper container */
+.img {
+  display: flex;
+  align-items: center;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 60px auto;
+  padding: 60px 30px;
+  background: #ffffff; /* خلفية بيضاء متناسقة */
+  border-radius: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+  font-family: 'Poppins', sans-serif;
+  opacity: 0;
+  transform: translateY(30px);
+  animation: containerFadeIn 1s forwards;
+}
+
+/* الصورة */
+.img img {
+  width: 50%;
+  border-radius: 14px;
+  object-fit: cover;
+  order: 2;
+  box-shadow: 0 6px 18px rgba(0,0,0,0.15);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.img img:hover {
+  transform: scale(1.03);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.25);
+}
+
+/* النص */
+.text-content {
+  width: 50%;
+  order: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #444;
+  padding: 10px;
+}
+
+/* العنوان */
+.text-content h1 {
+  font-size: 2.4rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+  font-family: 'Playfair Display', serif;
+  line-height: 1.2;
+  background: linear-gradient(90deg, #ff6f61, #d63384);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  text-transform: uppercase;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: textFadeIn 0.8s ease forwards;
+  animation-delay: 0.3s;
+  cursor: default;
+  transition: all 0.3s ease;
+}
+
+.text-content h1:hover {
+  background: linear-gradient(90deg, #d63384, #ff6f61);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* الفقرة */
+.text-content p {
+  font-size: 1.15rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 25px;
+  opacity: 0;
+  transform: translateY(20px);
+  animation: textFadeIn 0.8s ease forwards;
+  animation-delay: 0.5s;
+}
+
+/* زر CTA بنفس ستايل الأزرار الأخرى */
+.cont-btn {
+  display: inline-block;
+  padding: 14px 36px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  border-radius: 30px;
+   background: linear-gradient(135deg, #ff6a88, #ff99ac);
+  color: white;
+  border: none;
+  cursor: pointer;
+  text-decoration: none;
+  text-align: center;
+  transition: all 0.3s ease;
+  letter-spacing: 0.5px;
+  box-shadow: 0 0 20px rgba(241, 35, 138, 0.2);
+  opacity: 0;
+  transform: translateY(20px);
+  animation: textFadeIn 0.8s ease forwards;
+  animation-delay: 0.7s;
+}
+
+.cont-btn:hover {
+  transform: scale(1.08);
+  background: linear-gradient(90deg, #ee9ca7, #ffdde1);
+  box-shadow: 0 8px 22px rgba(255, 106, 136, 0.35);
+}
+
+/* Animations */
+@keyframes containerFadeIn {
+  0% { opacity: 0; transform: translateY(30px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes textFadeIn {
+  0% { opacity: 0; transform: translateY(20px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .img {
+    flex-direction: column;
+    padding: 30px 15px;
+    align-items: center;
+  }
+
+  .img img, .text-content {
+    width: 100%;
+    order: unset;
+  }
+
+  .img img {
+    margin-bottom: 20px;
+  }
+
+  .text-content h1 {
+    font-size: 2rem;
+    text-align: center;
+  }
+
+  .text-content p {
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .cont-btn {
+    margin: 0 auto;
+  }
+}
+
