@@ -1,35 +1,91 @@
-/* بطاقة الفورم */
+/* البطاقة */
 .contact-card {
-  background: rgba(255, 255, 255, 0.1); /* شفافة مع لمسة أبيض */
-  backdrop-filter: blur(10px); /* تأثير الضبابية */
-  border-radius: 20px;
-  padding: 40px 30px;
-  max-width: 500px;
-  margin: 50px auto;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  color: #fff;
+  background: linear-gradient(135deg, #ffffff 0%, #fff0e5 100%);
+  border-radius: 25px;
+  padding: 50px 40px;
+  max-width: 600px;
+  margin: 60px auto;
+  color: #333;
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 25px;
+  text-align: center;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  transition: all 0.5s ease, background-position 5s ease-in-out;
+  background-size: 200% 200%;
+  animation: bgShift 10s infinite alternate;
+}
+
+.contact-card:hover {
+  box-shadow: 0 20px 50px rgba(255, 126, 95, 0.4);
+}
+
+/* Background subtle animation */
+@keyframes bgShift {
+  0% { background-position: 0% 0%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 100%; }
+}
+
+/* Fade-in animation */
+.fade-in {
+  opacity: 0;
+  transform: translateY(30px);
+  animation: fadeInUp 0.6s forwards;
+}
+
+@keyframes fadeInUp {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* العنوان والوصف */
+.contact-card h2,
+.contact-card p {
+  transition: all 0.3s, text-shadow 2s ease-in-out;
+  animation: glowPulse 4s infinite alternate;
+}
+
+@keyframes glowPulse {
+  0% { text-shadow: 0 0 5px rgba(255,126,95,0.2); }
+  50% { text-shadow: 0 0 15px rgba(255,126,95,0.4); }
+  100% { text-shadow: 0 0 5px rgba(255,126,95,0.2); }
+}
+
+.contact-card h2:hover {
+  transform: translateY(-2px) scale(1.02);
+}
+
+.contact-card p:hover {
+  transform: translateY(-1px) scale(1.01);
 }
 
 /* Inputs و textarea */
 .contact-card input,
 .contact-card textarea {
-  background: rgba(255, 255, 255, 0.15); /* شبه شفافة */
-  border: none;
-  border-radius: 15px;
-  padding: 15px 20px;
-  color: #fff;
+  background: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 12px;
+  padding: 18px 22px;
+  color: #333;
   font-size: 16px;
   width: 100%;
   box-sizing: border-box;
   resize: none;
+  transition: 0.4s, box-shadow 0.4s, transform 0.3s;
+  animation: glowPulse 4s infinite alternate;
 }
 
-.contact-card input::placeholder,
-.contact-card textarea::placeholder {
-  color: rgba(255, 255, 255, 0.7);
+.contact-card input:focus,
+.contact-card textarea:focus,
+.contact-card input:hover,
+.contact-card textarea:hover {
+  border-color: #ff7e5f;
+  box-shadow: 0 0 25px rgba(255, 126, 95, 0.5);
+  outline: none;
+  transform: translateY(-2px) scale(1.01);
 }
 
 /* زر الإرسال */
@@ -37,42 +93,80 @@
   background: linear-gradient(135deg, #ff7e5f, #feb47b);
   border: none;
   border-radius: 15px;
-  padding: 15px 0;
+  padding: 18px 0;
   color: #fff;
   font-size: 18px;
-  font-weight: bold;
+  font-weight: 700;
   cursor: pointer;
-  transition: 0.3s;
+  transition: 0.3s, box-shadow 0.3s, transform 0.3s;
+  margin-top: 10px;
+  animation: glowPulse 4s infinite alternate;
 }
 
 .contact-card button:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 15px 35px rgba(255, 126, 95, 0.6);
 }
 
 /* أيقونات الأسفل */
 .contact-card .icons {
   display: flex;
   justify-content: center;
-  gap: 25px;
-  margin-top: 10px;
+  gap: 30px;
+  margin-top: 20px;
 }
 
 .contact-card .icons svg {
-  width: 28px;
-  height: 28px;
-  color: #fff;
-  transition: 0.3s;
+  width: 32px;
+  height: 32px;
+  color: #333;
+  transition: 0.3s, transform 0.3s, filter 0.3s;
+  animation: glowPulse 4s infinite alternate;
 }
 
 .contact-card .icons svg:hover {
   color: #ff7e5f;
-  transform: scale(1.2);
+  transform: scale(1.3) translateY(-3px);
+  filter: drop-shadow(0 0 12px rgba(255, 126, 95, 0.6));
 }
 
 /* responsive */
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .contact-card {
-    padding: 30px 20px;
+    padding: 40px 25px;
+  }
+
+  .contact-card h2 {
+    font-size: 28px;
+  }
+
+  .contact-card .icons svg {
+    width: 28px;
+    height: 28px;
   }
 }
+
+/* Particles background */
+.particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  z-index: 0;
+}
+
+.particle {
+  position: absolute;
+  background: rgba(255, 255, 255, 0.4);
+  border-radius: 50%;
+  animation: float 15s linear infinite;
+}
+
+@keyframes float {
+  0% { transform: translateY(0) translateX(0) scale(1); opacity: 0.4; }
+  50% { transform: translateY(-50px) translateX(30px) scale(1.2); opacity: 0.6; }
+  100% { transform: translateY(-100px) translateX(-20px) scale(1); opacity: 0.4; }
+}
+
