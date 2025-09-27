@@ -1,0 +1,32 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js",
+    "dev-index": "nodemon index.js",
+    "seed": "node scripts/seedData.js",
+    "db:stats": "node scripts/dbManager.js stats",
+    "db:users": "node scripts/dbManager.js users",
+    "db:services": "node scripts/dbManager.js services",
+    "db:clear": "node scripts/dbManager.js clear",
+    "db:seed": "node scripts/dbManager.js seed",
+    "db:health": "node scripts/dbManager.js health",
+    "db:export": "node scripts/dbManager.js export",
+    "db:full": "node scripts/dbManager.js full",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.2",
+    "express": "^5.1.0",
+    "mongodb": "^6.20.0",
+    "mongoose": "^8.18.2",
+    "nodemon": "^3.1.10"
+  },
+  "description": ""
+}

@@ -1,6 +1,5 @@
-/* Fonts */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap');
 
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap');
 /* Section */
 .portfolio-section {
   padding: 80px 20px;
@@ -22,10 +21,9 @@
   font-size: 3rem;
   font-weight: 700;
   margin-bottom: 20px;
-  background: linear-gradient(90deg, #ff6f61, #d63384);
+  background: linear-gradient(90deg, #d7b6b3, #a07c8e);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
-  letter-spacing: 2px;
 }
 
 .portfolio-text p {
@@ -55,20 +53,12 @@
   opacity: 0;
   transform: translateY(30px);
   transition: opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease;
-  will-change: transform, opacity;
 }
 
-/* Scroll Animation */
 .portfolio-item.show {
   opacity: 1;
   transform: translateY(0);
 }
-
-/* Stagger animation effect using delay if you want
-.portfolio-item:nth-child(1) { transition-delay: 0.1s; }
-.portfolio-item:nth-child(2) { transition-delay: 0.2s; }
-.portfolio-item:nth-child(3) { transition-delay: 0.3s; }
-*/
 
 /* Hover effect */
 .portfolio-item:hover {
@@ -94,7 +84,7 @@
   position: absolute;
   bottom: 15px;
   right: 15px;
-  background: rgba(230, 126, 34, 0.85);
+  background: rgba(125, 126, 114, 0.85);
   border: none;
   border-radius: 6px;
   color: white;
@@ -102,7 +92,6 @@
   cursor: pointer;
   opacity: 0;
   transition: opacity 0.3s, transform 0.3s, box-shadow 0.3s;
-  will-change: transform, opacity, box-shadow;
 }
 
 /* Button Hover Animation */
@@ -142,7 +131,6 @@
   border-radius: 16px;
   box-shadow: 0 12px 40px rgba(0,0,0,0.3);
   transition: transform 0.3s ease-in-out;
-  cursor: pointer;
 }
 
 .lightbox-overlay img:hover {
@@ -161,7 +149,7 @@
 }
 
 .close-btn:hover, .prev-btn:hover, .next-btn:hover {
-  color: #e67e22;
+  color: #bca088;
 }
 
 .close-btn { top: 30px; right: 40px; }
@@ -174,10 +162,16 @@
   .portfolio-text p { font-size: 1rem; }
 }
 
+@media (max-width: 768px) {
+  .portfolio-gallery { gap: 18px; }
+  .portfolio-item { padding-top: 65%; }
+}
+
 @media (max-width: 480px) {
   .portfolio-gallery {
     grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
     gap: 12px;
   }
   .portfolio-item { padding-top: 60%; }
+  .close-btn, .prev-btn, .next-btn { font-size: 2.5rem; }
 }

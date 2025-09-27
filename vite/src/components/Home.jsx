@@ -1,55 +1,48 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import './Home.css';
 import Test from "./Test";
-import Proposal from "./Proposal";
-import Cont from "./Cont";
+import Proposal from "./ProposalCarousel";
 
 function Home() {
-    useEffect(() => {
-        const revealElements = document.querySelectorAll(".reveal");
+  useEffect(() => {
+    const revealElements = document.querySelectorAll(".reveal");
+    const revealOnScroll = () => {
+      revealElements.forEach(el => {
+        const top = el.getBoundingClientRect().top;
+        const windowHeight = window.innerHeight;
+        if (top < windowHeight - 100) el.classList.add("active");
+      });
+    };
+    revealOnScroll();
+    window.addEventListener("scroll", revealOnScroll);
+    return () => window.removeEventListener("scroll", revealOnScroll);
+  }, []);
 
-        const revealOnScroll = () => {
-            revealElements.forEach((el) => {
-                const elementTop = el.getBoundingClientRect().top;
-                const windowHeight = window.innerHeight;
-                if (elementTop < windowHeight - 100) {
-                    el.classList.add("active");
-                }
-            });
-        };
+  return (
+    <div className="home">
+      {/* Hero Section */}
+      <section className="hero reveal">
+        <img
+          className="bg-img"
+          src="https://i.pinimg.com/1200x/bf/5b/86/bf5b86e97c8ce75dbf85dad793b09826.jpg"
+          alt="Proposal Hero"
+        />
+        <div className="overlay"></div>
+        <div className="hero__content">
+          <h1>Plan Your <span className="highlight">Dream Proposal</span></h1>
+          <p>Create unforgettable moments with our luxury proposal planning service.</p>
+          <Link to="/StartPlanning" className="btn-gradient">Book Your Proposal</Link>
+        </div>
+      </section>
 
-        window.addEventListener("scroll", revealOnScroll);
-        revealOnScroll(); // تشغيل أولي
-
-        return () => window.removeEventListener("scroll", revealOnScroll);
-    }, []);
-
-    return (
-        <>
-            <div className="home">
-                <section className="hero reveal">
-                    <img 
-                        className="bg-img"
-                        src="https://i.pinimg.com/736x/4a/35/9c/4a359c6adfc37a70c385791fe68b94bc.jpg" 
-                        alt="Proposal" 
-                    />
-                    <div className="overlay"></div>
-                    <div className="hero__content">
-                        <h1 className="hero__title">
-                            <span>Plan Your</span>
-                            <span className="hero__highlight">DREAM Proposal</span>
-                        </h1>
-                        <a href="#" className="btn btn--outline-double">Get Started</a>
-                    </div>
-                </section>
-            </div>
-
-            {/* باقي الكومبونونتس مع animation */}
-            <div className="reveal"><Test /></div>
-            <div className="reveal"><Proposal /></div>
-            <div className="reveal"><Cont /></div>
-        </>
-    );
+      {/* Components Section */}
+      <section className="components">
+        <div className="reveal"><Test /></div>
+        <div className="reveal" id="packages"><Proposal /></div>
+      </section>
+    </div>
+  );
 }
 
 export default Home;

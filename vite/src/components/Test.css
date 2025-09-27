@@ -1,109 +1,136 @@
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700&family=Poppins:wght@400;500;600&display=swap');
-
-.info__section {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 50px;
-  max-width: 1200px;
-  margin: 40px auto;
-  padding: 60px 40px;
-  font-family: 'Poppins', sans-serif;
-
-  background: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+.masonry {
+  padding: 4rem 2rem;
+  background: #fafafa;
+  text-align: center;
 }
 
-.info__text {
-  flex: 1.2;
-  text-align: left;
-}
-
-/* العنوان الكبير */
-.info__text h1 {
-  font-size: 3rem;
-  margin-bottom: 30px;
-  font-family: 'Playfair Display', serif;
-  background: linear-gradient(90deg, #ff6f61, #d63384);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  text-transform: uppercase;
-  letter-spacing: 2px;
-}
-
-/* العناوين الصغار باللون الذهبي */
-.info__block {
-  margin-bottom: 25px;
-  text-align: left;
-}
-
-.info__block h2 {
-  font-size: 1.8rem;
-  margin-bottom: 12px;
+.masonry__title {
+  font-size: 2.5rem;
   font-weight: 700;
-  font-family: 'Playfair Display', serif;
-  background: linear-gradient(90deg, #ff9a9e, #fbc2eb);
+  margin-bottom: 3rem;
+  background: linear-gradient(90deg, #ff7eb3, #ff758c, #ffb199);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+.masonry__grid {
+  column-count: 3;
+  column-gap: 1rem;
+}
+
+@media (max-width: 1024px) {
+  .masonry__grid {
+    column-count: 2;
+  }
+}
+
+@media (max-width: 600px) {
+  .masonry__grid {
+    column-count: 1;
+  }
+}
+
+.masonry__item {
   position: relative;
-}
-
-.info__block h2::after {
-  content: "";
-  display: block;
-  width: 50px;
-  height: 3px;
-  background: #ff9a9e;
-  margin-top: 6px;
-  border-radius: 2px;
-}
-
-/* النصوص */
-.info__block p {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: #666;
-  font-family: 'Poppins', sans-serif;
-  margin-left: 5px;
-}
-
-/* الصورة */
-.info__image {
-  flex: 1;
-  text-align: right;
-}
-
-.info__image img {
-  max-width: 100%;
+  margin-bottom: 1rem;
   border-radius: 16px;
-  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  overflow: hidden;
+  break-inside: avoid;
+  cursor: pointer;
+  transform: scale(1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.masonry__item:hover {
+  transform: scale(1.03);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.25);
+}
+
+.masonry__item img {
+  width: 100%;
+  display: block;
+  border-radius: 16px;
   transition: transform 0.3s ease;
 }
 
-.info__image img:hover {
-  transform: scale(1.05);
+.masonry__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,0.25), rgba(0,0,0,0.6));
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  opacity: 0;
+  transition: opacity 0.4s ease, transform 0.4s ease;
+  color: #fff;
+  border-radius: 16px;
+  padding: 1rem;
 }
 
-/* Responsive */
-@media (max-width: 992px) {
-  .info__section {
-    flex-direction: column;
-    text-align: left;
-    gap: 30px;
-    padding: 40px 20px;
-  }
-
-  .info__text h1 {
-    font-size: 2.2rem;
-  }
-
-  .info__block h2 {
-    font-size: 1.4rem;
-  }
-
-  .info__image {
-    text-align: center;
-  }
+.masonry__item:hover .masonry__overlay {
+  opacity: 1;
+  transform: translateY(0);
 }
 
+.masonry__overlay h3 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+  font-weight: 700;
+}
+
+.masonry__overlay button {
+  padding: 0.6rem 1.4rem;
+  border: none;
+  border-radius: 30px;
+  background: linear-gradient(90deg, #ff758c, #ff7eb3, #ffb199);
+  color: #fff;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease, transform 0.3s ease;
+}
+
+.masonry__overlay button:hover {
+  transform: scale(1.1);
+}
+
+/* Modal صغير */
+.infoModal {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.infoModal__content {
+  background: #fff;
+  padding: 1.5rem 2rem;
+  border-radius: 16px;
+  max-width: 400px; /* صغير */
+  text-align: center;
+  position: relative;
+}
+
+.infoModal__content h2 {
+  margin-bottom: 1rem;
+  font-size: 1.5rem;
+  color: #ff758c;
+}
+
+.infoModal__content p {
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+.infoModal__close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.8rem;
+  color: #333;
+  cursor: pointer;
+}

@@ -4,8 +4,7 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Test from "./components/Test";
-import Proposal from "./components/Proposal";
-import Cont from "./components/Cont";
+import ProposalCarousel from "./components/ProposalCarousel";
 import Services from "./components/Services";
 import Portfolio from "./components/Portfolio";
 import Contact from "./components/Contact";
@@ -13,19 +12,27 @@ import Footer from "./components/Footer";
 
 import Blog from "./components/Blog";          // قائمة المقالات
 import BlogDetail from "./components/BlogDetail"; // المقال الفردي
-import Booking from "./components/Booking";
+import Booking from "./components/StartPlanning";
+import StartPlanning from "./components/StartPlanning"; // الصفحة الجديدة
+import ApiTest from "./components/ApiTest"; // Backend API connection test
+import ConnectionStatus from "./components/ConnectionStatus"; // Connection status indicator
+import DatabaseDashboard from "./components/DatabaseDashboard"; // Database management
+import ServiceDetail from "./components/ServiceDetail"; // Service detail page
+import NavigationTest from "./components/NavigationTest"; // Navigation test page
+import ServicesDebug from "./components/ServicesDebug"; // Services debug page
+import ServicesLinkTest from "./components/ServicesLinkTest"; // Services link test page
 
 // CSS imports
 import './components/Navbar.css';
 import './components/Test.css';
-import './components/Proposal.css';
-import './components/Cont.css';
+import './components/ProposalCarousel.css';
 import './components/Services.css';
 import './components/Portfolio.css';
 import './components/Contact.css';
 import './components/Footer.css';
 import './components/Blog.css';
-import './components/Booking.css';
+import './components/StartPlanning.css'; // CSS ديال StartPlanning
+import './components/ServiceDetail.css'; // CSS pour ServiceDetail
 
 function App() {
   return (
@@ -34,18 +41,33 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/test" element={<Test />} />
-        <Route path="/proposal" element={<Proposal />} />
+        <Route path="/proposal" element={<ProposalCarousel />} />
         <Route path="/services" element={<Services />} />
+        <Route path="/service/:id" element={<ServiceDetail />} />
         <Route path="/portfolio" element={<Portfolio />} />
-        <Route path="/cont" element={<Cont />} />
         <Route path="/contact" element={<Contact />} />
-        
-        {/* Blog routes */}
-        <Route path="/blog" element={<Blog />} />              {/* قائمة المقالات */}
-        <Route path="/blog/:slug" element={<BlogDetail />} /> {/* المقال الفردي */}
 
-        {/* Booking */}
-        <Route path="/booking" element={<Booking />} />
+        {/* Blog routes */}
+        <Route path="/blog" element={<Blog />} />
+        <Route path="/blog/:slug" element={<BlogDetail />} />
+
+        {/* StartPlanning */}
+        <Route path="/StartPlanning" element={<StartPlanning />} />
+        
+        {/* API Test - for development/testing */}
+        <Route path="/api-test" element={<ApiTest />} />
+        
+        {/* Database Dashboard - for database management */}
+        <Route path="/database" element={<DatabaseDashboard />} />
+        
+        {/* Navigation Test - for testing service links */}
+        <Route path="/nav-test" element={<NavigationTest />} />
+        
+        {/* Services Debug - for debugging service navigation */}
+        <Route path="/services-debug" element={<ServicesDebug />} />
+        
+        {/* Services Link Test - for testing all service links */}
+        <Route path="/services-test" element={<ServicesLinkTest />} />
       </Routes>
       <Footer />
     </Router>
@@ -53,3 +75,4 @@ function App() {
 }
 
 export default App;
+

@@ -1,4 +1,5 @@
 import React, { useEffect } from "react";
+import { Link } from "react-router-dom";
 import "./Services.css";
 import { FaRegHeart, FaCamera, FaGem, FaBuilding } from "react-icons/fa";
 
@@ -32,7 +33,7 @@ const servicesData = [
     title: "Shop the Edit",
     description:
       "Select premium props and setups curated for creating modern, stylish DIY moments.",
-    img: "https://i.pinimg.com/736x/08/9e/e3/089ee3ecb4f2ccc479534f49375a692f.jpg",
+    img: "https://i.pinimg.com/736x/58/1d/75/581d757454d5b39048c4afc46de0fafb.jpg",
     icon: <FaGem />,
   },
   {
@@ -72,7 +73,7 @@ export default function Services() {
 
   return (
     <div className="services-page">
-      {/* Hero Section with Background Image */}
+      {/* Hero Section */}
       <section className="services-hero">
         <div className="overlay"></div>
         <div className="hero-content">
@@ -92,7 +93,10 @@ export default function Services() {
               <div className="icon">{service.icon}</div>
               <h2>{service.title}</h2>
               <p>{service.description}</p>
-              <button className="learn-more-btn">Learn More</button>
+              {/* Button redirects to Service Detail page */}
+              <Link to={`/service/${service.id}`} className="learn-more-btn">
+                 Voir les détails
+              </Link>
             </div>
           </div>
         ))}
@@ -100,9 +104,9 @@ export default function Services() {
 
       {/* CTA Section */}
       <section className="cta-section">
-        <h2>Ready to elevate your moment?</h2>
-        <p>Contact us to plan a modern and unforgettable experience.</p>
-        <button className="cta-btn">Book Now</button>
+        <h2>Découvrez nos services en détail</h2>
+        <p>Cliquez sur "Voir les détails" de chaque service pour en savoir plus sur nos offres personnalisées.</p>
+        {/* Removed StartPlanning link - only service details now */}
       </section>
     </div>
   );

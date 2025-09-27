@@ -1,3 +1,4 @@
+// Portfolio.jsx
 import React, { useState, useEffect } from 'react';
 import './Portfolio.css';
 
@@ -44,7 +45,7 @@ function Portfolio() {
       <div className="portfolio-text">
         <h2>Our Proposal Portfolio</h2>
         <p>
-          Explore our curated collection of proposal setups that highlight creativity, elegance, and unforgettable moments. Each image tells a story, showcasing the personal touch we bring to every event. From intimate candlelit dinners to grand romantic gestures, our portfolio reflects a diverse range of styles and ideas, ensuring that every proposal feels unique and deeply memorable. Let us inspire your perfect moment, where love, attention to detail, and imagination come together to create an experience that will be cherished forever.
+        Discover our carefully curated collection of proposal setups, each designed to capture the perfect balance of creativity, elegance, and unforgettable moments. From intimate, romantic gestures to grand, show-stopping events, every detail is thoughtfully planned to bring your vision to life. Our team ensures that every proposal is not just an event, but a memory that will be cherished forever. Explore our gallery and let inspiration guide you to the proposal of your dreams .
         </p>
       </div>
 
@@ -54,11 +55,9 @@ function Portfolio() {
             className="portfolio-item"
             key={i}
             style={{ backgroundImage: `url(${img})` }}
+            onClick={() => openLightbox(i)}
           >
-            <button onClick={(e) => { 
-              e.stopPropagation(); 
-              console.log(`Button clicked on image ${i+1}`); 
-            }}>View</button>
+            <button onClick={(e) => { e.stopPropagation(); openLightbox(i); }}>View</button>
           </div>
         ))}
       </div>

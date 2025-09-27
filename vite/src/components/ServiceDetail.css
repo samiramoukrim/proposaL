@@ -1,0 +1,203 @@
+.service-detail {
+  min-height: 100vh;
+  font-family: 'Poppins', sans-serif;
+  background: #fff;
+  color: #333;
+  position: relative;
+  z-index: 1;
+  overflow-x: hidden;
+}
+
+/* Floating Hearts Background stays same */
+.hearts-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  overflow: hidden;
+  z-index: -1;
+}
+
+.heart {
+  position: absolute;
+  bottom: -50px;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 105, 135, 0.8);
+  transform: rotate(45deg);
+  animation: floatUp 8s linear infinite;
+  border-radius: 5px;
+}
+
+.heart::before,
+.heart::after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  background: rgba(255, 105, 135, 0.8);
+  border-radius: 50%;
+}
+
+.heart::before { top: -10px; left: 0; }
+.heart::after { left: 10px; top: 0; }
+
+@keyframes floatUp {
+  0% { transform: translateY(0) rotate(45deg) scale(0.8); opacity: 1; }
+  100% { transform: translateY(-110vh) rotate(45deg) scale(1.2); opacity: 0; }
+}
+
+/* Header */
+.service-header {
+  position: relative;
+  height: 65vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 0 0 40px 40px;
+}
+
+.service-header img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: brightness(70%);
+  transform: scale(1.1);
+  transition: transform 6s ease;
+}
+
+.service-header:hover img {
+  transform: scale(1.2);
+}
+
+.service-header-content {
+  position: absolute;
+  text-align: center;
+  color: #fff;
+  max-width: 800px;
+  padding: 20px;
+}
+
+.service-header-content h1 {
+  font-size: 3rem;
+  font-weight: 700;
+  margin-bottom: 12px;
+  background: linear-gradient(90deg, #ff6b9d, #ffb6c1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Removed animation */
+}
+
+.service-header-content p {
+  font-size: 1.1rem;
+  opacity: 0.9;
+}
+
+.service-price {
+  margin-top: 15px;
+  font-size: 1.3rem;
+  background: rgba(255, 255, 255, 0.2);
+  padding: 10px 20px;
+  border-radius: 30px;
+  display: inline-block;
+  backdrop-filter: blur(6px);
+}
+
+/* Main Content */
+.service-content {
+  padding: 60px 20px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.service-info section {
+  background: #fff;
+  padding: 30px;
+  border-radius: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.06);
+  margin-bottom: 40px;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+}
+
+.service-info h2 {
+  font-size: 2rem;
+  margin-bottom: 15px;
+  font-weight: 700;
+  background: linear-gradient(90deg, #ff6b9d, #ffb6c1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Removed animation */
+}
+
+.details-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.detail-item {
+  background: #fafafa;
+  padding: 20px;
+  border-radius: 16px;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.05);
+  transition: all 0.4s ease;
+}
+
+.detail-item h3 {
+  font-size: 1.1rem;
+  margin-bottom: 8px;
+  background: linear-gradient(90deg, #ff6b9d, #ffb6c1);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  /* Removed animation */
+}
+
+/* Call to Action */
+.service-cta {
+  background: linear-gradient(135deg, #fbb1bd, #fce1e7);
+  padding: 50px 25px;
+  text-align: center;
+  border-radius: 25px;
+  color: #333;
+  box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+}
+
+.cta-btn.primary {
+  background: linear-gradient(90deg, #ff6b9d, #ffb6c1);
+  color: #fff;
+}
+
+.cta-btn.primary:hover {
+  background: linear-gradient(90deg, #ff477e, #ffa6b9);
+  transform: translateY(-3px) scale(1.05);
+}
+
+/* Back Button */
+.service-navigation { padding: 30px; text-align: center; }
+
+.back-btn {
+  padding: 12px 25px;
+  border-radius: 30px;
+  background: #f8f8f8;
+  border: 1px solid #ddd;
+  color: #c7256b;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+}
+
+.back-btn:hover {
+  background: linear-gradient(90deg, #ff6b9d, #ffb6c1);
+  color: #fff;
+  transform: translateY(-2px);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .service-header-content h1 { font-size: 2rem; }
+  .service-content { padding: 40px 15px; }
+}
+
