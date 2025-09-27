@@ -133,9 +133,48 @@
   transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
-.booking-btn:hover {
+.booking-btn:hover:not(:disabled) {
   transform: translateY(-3px);
   box-shadow: 0 14px 34px rgba(255,95,162,0.22);
+}
+
+.booking-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+/* Success and Error Messages */
+.booking-success {
+  background: rgba(18, 89, 47, 0.12);
+  color: #bff0c9;
+  border: 1px solid rgba(18,89,47,0.18);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.booking-error {
+  background: rgba(220, 53, 69, 0.12);
+  color: #f8d7da;
+  border: 1px solid rgba(220, 53, 69, 0.18);
+  padding: 12px 16px;
+  border-radius: 12px;
+  margin-bottom: 16px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.error {
+  display: block;
+  margin-top: 6px;
+  text-align: left;
+  color: #ffd1d1;
+  font-size: 0.82rem;
+  font-weight: 600;
 }
 
 /* Package card */

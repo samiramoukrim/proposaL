@@ -79,6 +79,7 @@
   opacity: 0;
   transform: translateY(40px);
   transition: all 0.6s ease;
+  height: 100%; /* Ensure uniform height */
 }
 
 .service-card.visible {
@@ -91,6 +92,7 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   border-radius: 20px 20px 0 0;
+  flex-shrink: 0; /* Prevent image from shrinking */
 }
 
 .service-image img {
@@ -111,6 +113,8 @@
   flex-direction: column;
   align-items: center;
   text-align: center;
+  flex: 1; /* Take remaining space */
+  justify-content: space-between; /* Distribute content evenly */
 }
 
 .service-text .icon {
@@ -133,11 +137,20 @@
   transform: scale(1.05);
 }
 
+/* Service content wrapper */
+.service-content {
+  flex: 1; /* Takes available space */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
 .service-text p {
   font-size: 1rem;
   color: #555;
   line-height: 1.6;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
+  flex: 1; /* Allow text to expand */
 }
 
 /* Buttons */
@@ -153,6 +166,8 @@
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  margin-top: auto; /* Push button to bottom */
+  align-self: center; /* Center the button */
 }
 
 .learn-more-btn:hover {

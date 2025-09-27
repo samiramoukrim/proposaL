@@ -54,8 +54,10 @@ function Blog() {
           <article key={post.id} className="blog-card">
             <img src={post.cover} alt={post.title} />
             <div className="blog-content">
-              <h2>{post.title}</h2>
-              <p>{post.snippet}</p>
+              <div className="blog-text">
+                <h2>{post.title}</h2>
+                <p>{post.snippet}</p>
+              </div>
               <Link to={`/blog/${post.slug}`} className="read-more">Read More →</Link>
             </div>
           </article>

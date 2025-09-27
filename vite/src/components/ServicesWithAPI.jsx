@@ -160,22 +160,24 @@ export default function ServicesWithAPI() {
               <img src={service.img} alt={service.title} />
             </div>
             <div className="service-text">
-              <div className="icon">{service.icon}</div>
-              <h2>{service.title}</h2>
-              <p>{service.description}</p>
-              {service.price && (
-                <p style={{ fontWeight: 'bold', color: '#007bff' }}>
-                  Starting at ${service.price}
-                </p>
-              )}
-              {useBackend && (
-                <small style={{ color: '#6c757d' }}>
-                  ID: {service.id} | Category: {service.category}
-                </small>
-              )}
+              <div className="service-content">
+                <div className="icon">{service.icon}</div>
+                <h2>{service.title}</h2>
+                <p>{service.description}</p>
+                {service.price && (
+                  <p style={{ fontWeight: 'bold', color: '#007bff' }}>
+                    Starting at ${service.price}
+                  </p>
+                )}
+                {useBackend && (
+                  <small style={{ color: '#6c757d' }}>
+                    ID: {service.id} | Category: {service.category}
+                  </small>
+                )}
+              </div>
               {/* Button redirects to Service Detail page */}
               <Link to={`/service/${service.id}`} className="learn-more-btn">
-                📖 Voir les détails
+                Voir les détails
               </Link>
             </div>
           </div>

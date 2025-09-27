@@ -1,216 +1,188 @@
 const express = require('express');
 const router = express.Router();
+const Reservation = require('../models/Reservation');
 
-// In-memory storage for reservations (replace with database in production)
-let reservations = [];
-let nextId = 1;
-
+// =======================
 // GET all reservations
-router.get('/', (req, res) => {
+// =======================
+router.get('/', async (req, res) => {
   try {
+    const { status, page = 1, limit = 10 } = req.query;
+    const query = status ? { status } : {};
+
+    const skip = (page - 1) * limit;
+
+    const reservations = await Reservation.find(query)
+      .sort({ createdAt: -1 })
+      .skip(skip)
+      .limit(parseInt(limit))
+      .populate('serviceId', 'title category');
+
+    const total = await Reservation.countDocuments(query);
+
     res.json({
       success: true,
       data: reservations,
-      count: reservations.length
+      count: reservations.length,
+      total,
+      page: parseInt(page),
+      pages: Math.ceil(total / limit)
     });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Error fetching reservations',
-      error: error.message
-    });
+    console.error('Error fetching reservations:', error);
+    res.status(500).json({ success: false, message: 'Error fetching reservations', error: error.message });
   }
 });
 
+// =======================
 // POST - Create new reservation
-router.post('/', (req, res) => {
+// =======================
+router.post('/', async (req, res) => {
   try {
     const { name, email, date, package, phone, message, serviceId } = req.body;
 
-    // Validation
-    const errors = {};
-    
-    if (!name || name.trim().length < 2) {
-      errors.name = 'Name is required and must be at least 2 characters';
-    }
-    
-    if (!email || !/\S+@\S+\.\S+/.test(email)) {
-      errors.email = 'Valid email is required';
-    }
-    
-    if (!date) {
-      errors.date = 'Date is required';
-    } else {
-      const selectedDate = new Date(date);
-      const today = new Date();
-      today.setHours(0, 0, 0, 0);
-      
-      if (selectedDate < today) {
-        errors.date = 'Date cannot be in the past';
-      }
-    }
-    
-    if (!package) {
-      errors.package = 'Package selection is required';
-    }
+    const reservationData = { name, email, date, package, phone, message, serviceId };
 
-    // If there are validation errors, return them
-    if (Object.keys(errors).length > 0) {
-      return res.status(400).json({
-        success: false,
-        message: 'Validation failed',
-        errors
-      });
-    }
+    const newReservation = new Reservation(reservationData);
+    const savedReservation = await newReservation.save();
 
-    // Create new reservation
-    const newReservation = {
-      id: nextId++,
-      name: name.trim(),
-      email: email.toLowerCase().trim(),
-      date,
-      package,
-      phone: phone?.trim() || null,
-      message: message?.trim() || null,
-      serviceId: serviceId || null,
-      status: 'pending',
-      createdAt: new Date().toISOString(),
-      updatedAt: new Date().toISOString()
-    };
+    await savedReservation.populate('serviceId', 'title category');
 
-    // Add to reservations array
-    reservations.push(newReservation);
-
-    // Send success response
     res.status(201).json({
       success: true,
       message: 'Reservation created successfully',
-      data: newReservation
+      data: savedReservation
     });
-
-    // Log the reservation (in production, you might want to send email notifications)
-    console.log('New reservation created:', {
-      id: newReservation.id,
-      name: newReservation.name,
-      email: newReservation.email,
-      date: newReservation.date,
-      package: newReservation.package
-    });
-
   } catch (error) {
     console.error('Error creating reservation:', error);
-    res.status(500).json({
-      success: false,
-      message: 'Internal server error',
-      error: error.message
-    });
+
+    if (error.name === 'ValidationError') {
+      const errors = {};
+      Object.keys(error.errors).forEach(key => {
+        errors[key] = error.errors[key].message;
+      });
+      return res.status(400).json({ success: false, message: 'Validation failed', errors });
+    }
+
+    res.status(500).json({ success: false, message: 'Internal server error', error: error.message });
   }
 });
 
-// GET reservation by ID
-router.get('/:id', (req, res) => {
+// =======================
+// GET reservations by user email
+// =======================
+router.get('/user/:email', async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const reservation = reservations.find(r => r.id === id);
+    const { email } = req.params;
+    const reservations = await Reservation.find({ email: email.toLowerCase() })
+      .sort({ createdAt: -1 })
+      .populate('serviceId', 'title category');
+
+    res.json({ success: true, data: reservations, count: reservations.length });
+  } catch (error) {
+    console.error('Error fetching user reservations:', error);
+    res.status(500).json({ success: false, message: 'Error fetching user reservations', error: error.message });
+  }
+});
+
+// =======================
+// GET reservation statistics
+// =======================
+router.get('/stats/overview', async (req, res) => {
+  try {
+    const totalReservations = await Reservation.countDocuments();
+    const pendingReservations = await Reservation.countDocuments({ status: 'pending' });
+    const confirmedReservations = await Reservation.countDocuments({ status: 'confirmed' });
+    const completedReservations = await Reservation.countDocuments({ status: 'completed' });
+
+    const packageStats = await Reservation.aggregate([
+      { $group: { _id: '$package', count: { $sum: 1 } } },
+      { $sort: { count: -1 } }
+    ]);
+
+    res.json({
+      success: true,
+      data: {
+        total: totalReservations,
+        pending: pendingReservations,
+        confirmed: confirmedReservations,
+        completed: completedReservations,
+        packageStats
+      }
+    });
+  } catch (error) {
+    console.error('Error fetching reservation statistics:', error);
+    res.status(500).json({ success: false, message: 'Error fetching reservation statistics', error: error.message });
+  }
+});
+
+// =======================
+// GET reservation by ID (keep last!)
+// =======================
+router.get('/:id', async (req, res) => {
+  try {
+    const reservation = await Reservation.findById(req.params.id)
+      .populate('serviceId', 'title category');
 
     if (!reservation) {
-      return res.status(404).json({
-        success: false,
-        message: 'Reservation not found'
-      });
+      return res.status(404).json({ success: false, message: 'Reservation not found' });
     }
 
-    res.json({
-      success: true,
-      data: reservation
-    });
+    res.json({ success: true, data: reservation });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Error fetching reservation',
-      error: error.message
-    });
+    console.error('Error fetching reservation:', error);
+    res.status(500).json({ success: false, message: 'Error fetching reservation', error: error.message });
   }
 });
 
-// PUT - Update reservation status
-router.put('/:id', (req, res) => {
+// =======================
+// PUT - Update reservation
+// =======================
+router.put('/:id', async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
     const { status, notes } = req.body;
-    
-    const reservationIndex = reservations.findIndex(r => r.id === id);
-    
-    if (reservationIndex === -1) {
-      return res.status(404).json({
-        success: false,
-        message: 'Reservation not found'
-      });
-    }
-
-    // Valid status values
     const validStatuses = ['pending', 'confirmed', 'cancelled', 'completed'];
-    
+
     if (status && !validStatuses.includes(status)) {
-      return res.status(400).json({
-        success: false,
-        message: 'Invalid status. Must be one of: ' + validStatuses.join(', ')
-      });
+      return res.status(400).json({ success: false, message: `Invalid status. Must be one of: ${validStatuses.join(', ')}` });
     }
 
-    // Update reservation
-    if (status) {
-      reservations[reservationIndex].status = status;
-    }
-    
-    if (notes) {
-      reservations[reservationIndex].notes = notes;
-    }
-    
-    reservations[reservationIndex].updatedAt = new Date().toISOString();
+    const updateData = {};
+    if (status) updateData.status = status;
+    if (notes) updateData.notes = notes;
 
-    res.json({
-      success: true,
-      message: 'Reservation updated successfully',
-      data: reservations[reservationIndex]
-    });
+    const updatedReservation = await Reservation.findByIdAndUpdate(
+      req.params.id,
+      updateData,
+      { new: true, runValidators: true }
+    ).populate('serviceId', 'title category');
 
+    if (!updatedReservation) {
+      return res.status(404).json({ success: false, message: 'Reservation not found' });
+    }
+
+    res.json({ success: true, message: 'Reservation updated successfully', data: updatedReservation });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Error updating reservation',
-      error: error.message
-    });
+    console.error('Error updating reservation:', error);
+    res.status(500).json({ success: false, message: 'Error updating reservation', error: error.message });
   }
 });
 
+// =======================
 // DELETE reservation
-router.delete('/:id', (req, res) => {
+// =======================
+router.delete('/:id', async (req, res) => {
   try {
-    const id = parseInt(req.params.id);
-    const reservationIndex = reservations.findIndex(r => r.id === id);
-    
-    if (reservationIndex === -1) {
-      return res.status(404).json({
-        success: false,
-        message: 'Reservation not found'
-      });
+    const deletedReservation = await Reservation.findByIdAndDelete(req.params.id);
+
+    if (!deletedReservation) {
+      return res.status(404).json({ success: false, message: 'Reservation not found' });
     }
 
-    const deletedReservation = reservations.splice(reservationIndex, 1)[0];
-
-    res.json({
-      success: true,
-      message: 'Reservation deleted successfully',
-      data: deletedReservation
-    });
-
+    res.json({ success: true, message: 'Reservation deleted successfully', data: deletedReservation });
   } catch (error) {
-    res.status(500).json({
-      success: false,
-      message: 'Error deleting reservation',
-      error: error.message
-    });
+    console.error('Error deleting reservation:', error);
+    res.status(500).json({ success: false, message: 'Error deleting reservation', error: error.message });
   }
 });
 

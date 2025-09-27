@@ -2,7 +2,7 @@ import axios from 'axios';
 
 // Create axios instance with base configuration
 const api = axios.create({
-  baseURL: '/api', // This will be proxied to http://localhost:5000/api
+  baseURL: 'http://localhost:5001/api', // Direct connection to backend
   timeout: 10000,
   headers: {
     'Content-Type': 'application/json',
@@ -32,7 +32,6 @@ api.interceptors.response.use(
   (error) => {
     // Handle common errors
     if (error.response?.status === 401) {
-      // Handle unauthorized access
       console.error('Unauthorized access');
     } else if (error.response?.status === 500) {
       console.error('Server error');
