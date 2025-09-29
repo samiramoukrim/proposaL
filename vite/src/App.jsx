@@ -1,15 +1,14 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
 
 import Navbar from "./components/Navbar";
 import Home from "./components/Home";
 import Test from "./components/Test";
 import ProposalCarousel from "./components/ProposalCarousel";
-import Services from "./components/Services";
 import Portfolio from "./components/Portfolio";
 import Contact from "./components/Contact";
 import Footer from "./components/Footer";
-
+import Services from "./components/Services";
 import Blog from "./components/Blog";          // قائمة المقالات
 import BlogDetail from "./components/BlogDetail"; // المقال الفردي
 import Booking from "./components/StartPlanning";
@@ -34,9 +33,19 @@ import './components/Blog.css';
 import './components/StartPlanning.css'; // CSS ديال StartPlanning
 import './components/ServiceDetail.css'; // CSS pour ServiceDetail
 
+ // Scroll to top on route change
+ function ScrollToTop() {
+   const { pathname } = useLocation();
+   useEffect(() => {
+     window.scrollTo({ top: 0, left: 0, behavior: 'auto' });
+   }, [pathname]);
+   return null;
+ }
+
 function App() {
   return (
     <Router>
+      <ScrollToTop />
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
