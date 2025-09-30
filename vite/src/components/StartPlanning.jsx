@@ -52,7 +52,6 @@ function StartPlanning({ serviceId = null }) {
     setSubmitError(null);
 
     try {
-      // Call backend
       const response = await reservationService.createReservation(formData);
       console.log("Reservation created:", response);
 
@@ -72,13 +71,13 @@ function StartPlanning({ serviceId = null }) {
 
   return (
     <div className="booking-page">
-      <div className="booking-card">
+      <div className="booking-card fade-slide-up delay-1">
         <h2 className="booking-title">Start Planning Your Proposal</h2>
 
         {submitted && <div className="booking-success">🎉 Thank you — your booking request was sent.</div>}
         {submitError && <div className="booking-error" role="alert">❌ {submitError}</div>}
 
-        <form className="booking-form" onSubmit={handleSubmit}>
+        <form className="booking-form">
           <div className="form-group">
             <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} />
             {errors.name && <small className="error">{errors.name}</small>}
@@ -101,7 +100,9 @@ function StartPlanning({ serviceId = null }) {
           <div className="form-group">
             <select name="package" value={formData.package} onChange={handleChange}>
               <option value="">-- Choose a Package --</option>
-              {packages.map(p => <option key={p.id} value={p.id}>{p.icon} {p.title}</option>)}
+              {packages.map((p) => (
+                <option key={p.id} value={p.id}>{p.icon} {p.title}</option>
+              ))}
             </select>
             {errors.package && <small className="error">{errors.package}</small>}
           </div>
@@ -110,19 +111,20 @@ function StartPlanning({ serviceId = null }) {
             <textarea name="message" placeholder="Additional details (optional)" value={formData.message} onChange={handleChange} />
           </div>
 
-          <button type="submit" className="booking-btn" disabled={loading}>
+          <button type="submit" className="booking-btn" disabled={loading} onClick={handleSubmit}>
             {loading ? "Submitting..." : "Reserve Now"}
           </button>
         </form>
-
-        {selectedPackage && (
-          <div className="package-card">
-            <div className="package-icon">{selectedPackage.icon}</div>
-            <h3>{selectedPackage.title}</h3>
-            <p>{selectedPackage.description}</p>
-          </div>
-        )}
       </div>
+
+      {/* Show only the selected package */}
+      {selectedPackage && (
+        <div className="package-card fade-slide-up delay-2">
+          <div className="package-icon">{selectedPackage.icon}</div>
+          <h3>{selectedPackage.title}</h3>
+          <p>{selectedPackage.description}</p>
+        </div>
+      )}
     </div>
   );
 }
