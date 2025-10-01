@@ -84,7 +84,8 @@
   position: absolute;
   bottom: 15px;
   right: 15px;
-  background: rgba(213, 22, 165, 0.85);
+  justify-content: space-between;
+  background: linear-gradient(90deg, #ffdde1, #ee9ca7);
   border: none;
   border-radius: 6px;
   color: white;
