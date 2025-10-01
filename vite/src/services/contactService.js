@@ -16,7 +16,7 @@ export const contactService = {
   // Get all contact messages (admin use)
   getAllMessages: async () => {
     try {
-      const response = await api.get('/contact');
+      const response = await api.get('/contact/');
       return response;
     } catch (error) {
       console.error('Error fetching contact messages:', error);

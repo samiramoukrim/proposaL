@@ -1,11 +1,11 @@
 {
   "name": "backend",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js",
     "dev": "nodemon server.js",
-    "dev-index": "nodemon index.js",
+    "dev-index": "nodemon server.js",
     "seed": "node scripts/seedData.js",
     "db:stats": "node scripts/dbManager.js stats",
     "db:users": "node scripts/dbManager.js users",
@@ -21,11 +21,12 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "body-parser": "^2.2.0",
     "cors": "^2.8.5",
-    "dotenv": "^17.2.2",
+    "dotenv": "^17.2.3",
     "express": "^5.1.0",
     "mongodb": "^6.20.0",
-    "mongoose": "^8.18.2",
+    "mongoose": "^8.18.3",
     "nodemon": "^3.1.10"
   },
   "description": ""

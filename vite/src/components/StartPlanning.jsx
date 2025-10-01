@@ -42,6 +42,7 @@ function StartPlanning({ serviceId = null }) {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
     const validationErrors = validate();
     if (Object.keys(validationErrors).length) {
       setErrors(validationErrors);
@@ -74,50 +75,59 @@ function StartPlanning({ serviceId = null }) {
       <div className="booking-card fade-slide-up delay-1">
         <h2 className="booking-title">Start Planning Your Proposal</h2>
 
-        {submitted && <div className="booking-success">🎉 Thank you — your booking request was sent.</div>}
-        {submitError && <div className="booking-error" role="alert">❌ {submitError}</div>}
+        {submitted && (
+          <div className="booking-success">
+            🎉 Thank you — your booking request was sent.
+          </div>
+        )}
+        {submitError && (
+          <div className="booking-error" role="alert">
+            ❌ {submitError}
+          </div>
+        )}
 
-        <form className="booking-form">
+        <form className="booking-form" onSubmit={handleSubmit}>
           <div className="form-group">
-            <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} />
+            <input type="text" name="name" placeholder="Full Name" value={formData.name} onChange={handleChange} disabled={loading || submitted} />
             {errors.name && <small className="error">{errors.name}</small>}
           </div>
 
           <div className="form-group">
-            <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} />
+            <input type="email" name="email" placeholder="Email Address" value={formData.email} onChange={handleChange} disabled={loading || submitted} />
             {errors.email && <small className="error">{errors.email}</small>}
           </div>
 
           <div className="form-group">
-            <input type="tel" name="phone" placeholder="Phone Number (optional)" value={formData.phone} onChange={handleChange} />
+            <input type="tel" name="phone" placeholder="Phone Number (optional)" value={formData.phone} onChange={handleChange} disabled={loading || submitted} />
           </div>
 
           <div className="form-group">
-            <input type="date" name="date" value={formData.date} onChange={handleChange} />
+            <input type="date" name="date" value={formData.date} onChange={handleChange} disabled={loading || submitted} />
             {errors.date && <small className="error">{errors.date}</small>}
           </div>
 
           <div className="form-group">
-            <select name="package" value={formData.package} onChange={handleChange}>
+            <select name="package" value={formData.package} onChange={handleChange} disabled={loading || submitted}>
               <option value="">-- Choose a Package --</option>
-              {packages.map((p) => (
-                <option key={p.id} value={p.id}>{p.icon} {p.title}</option>
+              {packages.map(p => (
+                <option key={p.id} value={p.id}>
+                  {p.icon} {p.title}
+                </option>
               ))}
             </select>
             {errors.package && <small className="error">{errors.package}</small>}
           </div>
 
           <div className="form-group">
-            <textarea name="message" placeholder="Additional details (optional)" value={formData.message} onChange={handleChange} />
+            <textarea name="message" placeholder="Additional details (optional)" value={formData.message} onChange={handleChange} disabled={loading || submitted} />
           </div>
 
-          <button type="submit" className="booking-btn" disabled={loading} onClick={handleSubmit}>
+          <button type="submit" className="booking-btn" disabled={loading || submitted}>
             {loading ? "Submitting..." : "Reserve Now"}
           </button>
         </form>
       </div>
 
-      {/* Show only the selected package */}
       {selectedPackage && (
         <div className="package-card fade-slide-up delay-2">
           <div className="package-icon">{selectedPackage.icon}</div>

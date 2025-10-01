@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Contact.css";
 import { FaFacebookF, FaInstagram, FaPinterestP } from "react-icons/fa";
-import { otherServices } from "../services/serviceService";
+import { contactService} from "../services/contactService";
 
 function Contact() {
   const [formData, setFormData] = useState({
@@ -12,6 +12,7 @@ function Contact() {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [error, setError] = useState('');
+  const [submitError, setSubmitError] = useState(null);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -21,23 +22,51 @@ function Contact() {
     }));
   };
 
+  const validate = () => {
+    const errors = {};
+    if (!formData.name.trim()) errors.name = "Name is required";
+    if (!formData.email.trim()) {
+      errors.email = "Email is required";
+    } else if (!/\S+@\S+\.\S+/.test(formData.email)) {
+      errors.email = "Email is invalid";
+    }
+    if (!formData.message.trim()) errors.message = "Message is required";
+  
+    return errors;
+  };
+  
+
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    const validationErrors = validate();
+    if (Object.keys(validationErrors).length) {
+      setErrors(validationErrors);
+      return;
+    }
+  
     setLoading(true);
-    setError('');
-    setSuccess(false);
-
+    setSubmitError(null);
+  
     try {
-      await otherServices.submitContact(formData);
+      const response = await contactService.sendMessage(formData);
+      console.log("Message sent:", response);
+  
       setSuccess(true);
-      setFormData({ name: '', email: '', message: '' });
-    } catch (err) {
-      setError('Failed to send message. Please try again.');
-      console.error('Contact form error:', err);
+      setFormData({ name: "", email: "", message: "" });
+      setErrors({});
+    } catch (error) {
+      console.error("Error sending message:", error);
+      if (error.errors) setErrors(error.errors); // validation errors from backend
+      else setSubmitError(error.message || "Failed to submit. Try again.");
     } finally {
       setLoading(false);
     }
   };
+  
+
+    
+
 
   return (
     <div className="contact-page">
